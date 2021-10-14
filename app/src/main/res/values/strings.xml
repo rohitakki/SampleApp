@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Movie App</string>
+    <string name="enter_number">Enter Number</string>
+    <string name="enter_days">Enter Days</string>
+    <string name="submit">Submit</string>
+    <string name="movies">Movies</string>
+    <string name="synopsis">Synopsis</string>
+</resources>
