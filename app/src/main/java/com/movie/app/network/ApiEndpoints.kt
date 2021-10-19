@@ -5,4 +5,5 @@ object ApiEndpoints {
     const val GET_GENRE_LIST = "/3/genre/movie/list"
     const val GET_NOW_PLAYING = "/3/movie/now_playing"
     const val IMAGE_PATH = "https://image.tmdb.org/t/p/original/"
+    const val TRENDING_REPOSITORIES = "/repositories"
 }
