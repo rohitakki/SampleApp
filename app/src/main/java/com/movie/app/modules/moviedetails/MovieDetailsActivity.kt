@@ -1,18 +1,14 @@
 package com.movie.app.modules.moviedetails
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
-import androidx.core.app.ActivityOptionsCompat
 import com.bumptech.glide.Glide
 import com.movie.app.R
 import com.movie.app.base.activity.BaseActivity
 import com.movie.app.databinding.ActivityMovieDetailsBinding
 import com.movie.app.model.MovieItem
-import com.movie.app.modules.main.MainActivity
 import com.movie.app.modules.main.MainViewModel
 import com.movie.app.network.ApiEndpoints
 import com.movie.app.utils.GenreManager
