@@ -18,5 +18,5 @@ interface ApiInterface {
     suspend fun getNowPlaying(@Query("api_key") apiKey: String): DiscoverMoviesResponse?
 
     @GET(ApiEndpoints.TRENDING_REPOSITORIES)
-    suspend fun getTrendingRepositories(): List<Repository>
+    suspend fun getTrendingRepositories(): List<Repository?>?
 }

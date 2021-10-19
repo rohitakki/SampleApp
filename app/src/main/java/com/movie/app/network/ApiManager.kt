@@ -2,6 +2,7 @@ package com.movie.app.network
 
 import com.movie.app.model.DiscoverMoviesResponse
 import com.movie.app.model.GenreListResponse
+import com.movie.app.model.repositories.Repository
 import javax.inject.Inject
 
 open class ApiManager @Inject constructor(private val apiInterface: ApiInterface) {
@@ -18,5 +19,9 @@ open class ApiManager @Inject constructor(private val apiInterface: ApiInterface
 
     suspend fun getGenreList(): GenreListResponse? {
         return apiInterface.getGenreList(apiKey)
+    }
+
+    suspend fun getTrendingRepositories(): List<Repository?>? {
+        return apiInterface.getTrendingRepositories()
     }
 }

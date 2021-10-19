@@ -9,6 +9,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
+        android:paddingBottom="@dimen/dp20"
+        android:paddingHorizontal="@dimen/dp20"
         android:layout_height="wrap_content">
 
         <View
@@ -22,7 +24,6 @@
             android:layout_below="@id/separator"
             android:id="@+id/main_layout"
             android:layout_marginTop="@dimen/dp20"
-            android:paddingHorizontal="@dimen/dp20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -47,7 +48,7 @@
                     android:textColor="@color/gray_dark"
                     android:fontFamily="@font/averta"
                     android:textSize="@dimen/sp16"
-                    android:text="Developer" />
+                    android:text="@{repository.builtBy.get(0).username}" />
 
                 <TextView
                     android:layout_marginTop="@dimen/dp6"
@@ -57,7 +58,7 @@
                     android:textColor="@color/gray_dark"
                     android:fontFamily="@font/averta_bold"
                     android:textSize="@dimen/sp22"
-                    android:text="Repository Title" />
+                    android:text="@{repository.repositoryName}" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -69,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginStart="@dimen/dp90">
+            android:layout_marginStart="@dimen/dp70">
 
             <TextView
                 android:id="@+id/description"
@@ -94,9 +95,9 @@
                     android:orientation="horizontal">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="@dimen/dp24"
-                        android:layout_height="@dimen/dp24"
-                        android:src="@{repository.languageColor}"
+                        android:layout_width="@dimen/dp18"
+                        android:layout_height="@dimen/dp18"
+                        android:src="@color/gray"
                         android:id="@+id/language_color" />
 
                     <TextView
@@ -107,7 +108,7 @@
                         android:textColor="@color/gray_dark"
                         android:fontFamily="@font/averta"
                         android:textSize="@dimen/sp20"
-                        android:text="@{repository.language}" />
+                        android:text="@{repository.language != null ? repository.language : @string/na}" />
 
                 </LinearLayout>
 
@@ -119,7 +120,7 @@
                     android:textColor="@color/gray_dark"
                     android:fontFamily="@font/averta"
                     android:textSize="@dimen/sp20"
-                    android:text="@{repository.totalStars}"
+                    android:text="@{repository.totalStars != null ? repository.totalStars.toString() : @string/na}"
                     android:layout_gravity="center"
                     android:drawablePadding="@dimen/dp10"
                     android:gravity="center_vertical"
@@ -133,7 +134,7 @@
                     android:textColor="@color/gray_dark"
                     android:fontFamily="@font/averta"
                     android:textSize="@dimen/sp20"
-                    android:text="@{repository.forks}"
+                    android:text="@{repository.forks != null ? repository.forks.toString() : @string/na}"
                     android:layout_gravity="center"
                     android:drawablePadding="@dimen/dp10"
                     android:gravity="center_vertical"
