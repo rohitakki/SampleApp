@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="repository"
+            type="com.movie.app.model.repositories.Repository" />
+    </data>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/separator"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            android:background="@color/gray" />
+
+        <RelativeLayout
+            android:layout_below="@id/separator"
+            android:id="@+id/main_layout"
+            android:layout_marginTop="@dimen/dp20"
+            android:paddingHorizontal="@dimen/dp20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_centerVertical="true"
+                android:layout_width="@dimen/dp50"
+                android:layout_height="@dimen/dp50"
+                android:src="@color/gray"/>
+
+            <LinearLayout
+                android:layout_marginStart="@dimen/dp20"
+                android:layout_toEndOf="@id/profile_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/developer_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_dark"
+                    android:fontFamily="@font/averta"
+                    android:textSize="@dimen/sp16"
+                    android:text="Developer" />
+
+                <TextView
+                    android:layout_marginTop="@dimen/dp6"
+                    android:id="@+id/repository_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_dark"
+                    android:fontFamily="@font/averta_bold"
+                    android:textSize="@dimen/sp22"
+                    android:text="Repository Title" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/secondary_layout"
+            android:layout_marginTop="@dimen/dp10"
+            android:layout_below="@id/main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/dp90">
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_dark"
+                android:fontFamily="@font/averta"
+                android:textSize="@dimen/sp20"
+                android:text="@{repository.description}" />
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="@dimen/dp24"
+                        android:layout_height="@dimen/dp24"
+                        android:src="@{repository.languageColor}"
+                        android:id="@+id/language_color" />
+
+                    <TextView
+                        android:layout_marginStart="@dimen/dp12"
+                        android:id="@+id/language_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray_dark"
+                        android:fontFamily="@font/averta"
+                        android:textSize="@dimen/sp20"
+                        android:text="@{repository.language}" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_marginStart="@dimen/dp20"
+                    android:id="@+id/star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_dark"
+                    android:fontFamily="@font/averta"
+                    android:textSize="@dimen/sp20"
+                    android:text="@{repository.totalStars}"
+                    android:layout_gravity="center"
+                    android:drawablePadding="@dimen/dp10"
+                    android:gravity="center_vertical"
+                    app:drawableStartCompat="@drawable/ic_baseline_star_24" />
+
+                <TextView
+                    android:layout_marginStart="@dimen/dp20"
+                    android:id="@+id/fork"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_dark"
+                    android:fontFamily="@font/averta"
+                    android:textSize="@dimen/sp20"
+                    android:text="@{repository.forks}"
+                    android:layout_gravity="center"
+                    android:drawablePadding="@dimen/dp10"
+                    android:gravity="center_vertical"
+                    app:drawableStartCompat="@drawable/ic_baseline_alt_route_24" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

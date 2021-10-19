@@ -18,7 +18,7 @@ object HttpModule {
     @Singleton
     @Provides
     fun providesBaseUrl(): String {
-        return "https://api.themoviedb.org"
+        return "https://gh-trending-api.herokuapp.com"
     }
 
     @ApiModule
