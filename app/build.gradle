@@ -10,7 +10,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.movie.app"
+        applicationId "com.trending.app"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 1

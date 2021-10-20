@@ -6,15 +6,10 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="dark_blue">#06091C</color>
-    <color name="transparent">#00ffffff</color>
     <color name="gray">#B9B9B9</color>
     <color name="gray_light">#7EB9B9B9</color>
     <color name="gray_dark">#595757</color>
     <color name="background_light_white">#f2f2f2</color>
-
-    <color name="gradient_start">#0d253f</color>
-    <color name="gradient_end">#10447C</color>
 
     <color name="star_yellow">#FFC107</color>
     <color name="green">#4CAF50</color>
