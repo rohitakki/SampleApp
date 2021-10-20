@@ -6,7 +6,6 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.movie.app.R
 import com.movie.app.base.activity.BaseActivity
 import com.movie.app.databinding.ActivityTrendingBinding
@@ -82,14 +81,14 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel
     fun getTrendingRepositories() {
         if (isConnectedToInternet()) {
             showLoading()
-            trendingViewModel.getTrendingRepositories()
+            trendingViewModel.getTrendingReposFromLocal()
         } else {
             showError()
             binding.pullToRefresh.isRefreshing = false
         }
     }
 
-    fun refreshData() {
+    private fun refreshData() {
         if (isConnectedToInternet()) {
             trendingViewModel.getTrendingRepositories()
         } else {
