@@ -26,11 +26,18 @@
                 android:textColor="@color/black" />
         </androidx.appcompat.widget.Toolbar>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:visibility="gone"
+            android:id="@+id/pull_to_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/trending_recycler_view" />
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/trending_recycler_view" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <io.supercharge.shimmerlayout.ShimmerLayout
             android:id="@+id/shimmer_layout"

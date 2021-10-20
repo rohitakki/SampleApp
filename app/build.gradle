@@ -100,4 +100,7 @@ dependencies {
 
     //shimmer layout
     implementation 'io.supercharge:shimmerlayout:2.1.0'
+
+    //swipe refresh layout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }

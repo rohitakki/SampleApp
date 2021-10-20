@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.movie.app.R
 import com.movie.app.base.activity.BaseActivity
 import com.movie.app.databinding.ActivityTrendingBinding
@@ -30,6 +31,10 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel
         setAdapter()
         subscribeToLiveData()
         getTrendingRepositories()
+
+        binding.pullToRefresh.setOnRefreshListener {
+            refreshData()
+        }
     }
 
     private fun subscribeToLiveData() {
@@ -37,8 +42,10 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel
             if (it != null) {
                 trendingRepositoryAdapter.addRepositories(it)
                 showRecyclerView()
+                binding.pullToRefresh.isRefreshing = false
             } else {
                 showError()
+                binding.pullToRefresh.isRefreshing = false
             }
         })
     }
@@ -46,21 +53,21 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel
     private fun showRecyclerView() {
         binding.shimmerLayout.stopShimmerAnimation()
         binding.shimmerLayout.visibility = View.GONE
-        binding.trendingRecyclerView.visibility = View.VISIBLE
+        binding.pullToRefresh.visibility = View.VISIBLE
         binding.errorLayoutView.visibility = View.GONE
     }
 
     private fun showLoading() {
         binding.shimmerLayout.startShimmerAnimation()
         binding.shimmerLayout.visibility = View.VISIBLE
-        binding.trendingRecyclerView.visibility = View.GONE
+        binding.pullToRefresh.visibility = View.GONE
         binding.errorLayoutView.visibility = View.GONE
     }
 
     private fun showError() {
         binding.shimmerLayout.stopShimmerAnimation()
         binding.shimmerLayout.visibility = View.GONE
-        binding.trendingRecyclerView.visibility = View.GONE
+        binding.pullToRefresh.visibility = View.GONE
         binding.errorLayoutView.visibility = View.VISIBLE
     }
 
@@ -78,6 +85,16 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel
             trendingViewModel.getTrendingRepositories()
         } else {
             showError()
+            binding.pullToRefresh.isRefreshing = false
+        }
+    }
+
+    fun refreshData() {
+        if (isConnectedToInternet()) {
+            trendingViewModel.getTrendingRepositories()
+        } else {
+            showError()
+            binding.pullToRefresh.isRefreshing = false
         }
     }
 

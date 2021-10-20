@@ -20,6 +20,9 @@ class TrendingRepositoryAdapter(private val context: Context) : RecyclerView.Ada
     private lateinit var itemRepositoryBinding: ItemRepositoryBinding
 
     fun addRepositories(repositories: List<Repository?>?) {
+        if (repositoryList != null) {
+            repositoryList?.clear()
+        }
         repositoryList?.addAll(repositories!!)
         notifyDataSetChanged()
     }
