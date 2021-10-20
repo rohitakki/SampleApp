@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -26,9 +26,44 @@
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/trending_recycler_view" />
+
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/shimmer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:shimmer_animation_duration="1200">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/item_shimmer" />
+                <include layout="@layout/item_shimmer" />
+                <include layout="@layout/item_shimmer" />
+                <include layout="@layout/item_shimmer" />
+                <include layout="@layout/item_shimmer" />
+                <include layout="@layout/item_shimmer" />
+                <include layout="@layout/item_shimmer" />
+                <include layout="@layout/item_shimmer" />
+                <include layout="@layout/item_shimmer" />
+                <include layout="@layout/item_shimmer" />
+
+            </LinearLayout>
+
+        </io.supercharge.shimmerlayout.ShimmerLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/error_layout">
+
+        </RelativeLayout>
 
     </LinearLayout>
 </layout>

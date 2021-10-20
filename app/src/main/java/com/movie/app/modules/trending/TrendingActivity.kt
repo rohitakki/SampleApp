@@ -1,6 +1,7 @@
 package com.movie.app.modules.trending
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,7 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel
 
     private fun init() {
         binding = getViewDataBinding()!!
+        binding.shimmerLayout.startShimmerAnimation()
         setAdapter()
         subscribeToLiveData()
         trendingViewModel.getTrendingRepositories()
@@ -33,6 +35,9 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel
     private fun subscribeToLiveData() {
         trendingViewModel.trendingRepositoryLiveData.observe(this, androidx.lifecycle.Observer {
             trendingRepositoryAdapter.addRepositories(it)
+            binding.shimmerLayout.stopShimmerAnimation()
+            binding.shimmerLayout.visibility = View.GONE
+            binding.trendingRecyclerView.visibility = View.VISIBLE
         })
     }
 

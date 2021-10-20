@@ -97,4 +97,7 @@ dependencies {
 
     //circular image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //shimmer layout
+    implementation 'io.supercharge:shimmerlayout:2.1.0'
 }

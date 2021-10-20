@@ -17,7 +17,7 @@ import com.movie.app.utils.Animations
 class TrendingRepositoryAdapter(private val context: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
     private var repositoryList: ArrayList<Repository?>? = arrayListOf()
-    lateinit var itemRepositoryBinding: ItemRepositoryBinding
+    private lateinit var itemRepositoryBinding: ItemRepositoryBinding
 
     fun addRepositories(repositories: List<Repository?>?) {
         repositoryList?.addAll(repositories!!)

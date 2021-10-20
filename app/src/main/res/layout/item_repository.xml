@@ -10,7 +10,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:paddingBottom="@dimen/dp20"
-        android:paddingHorizontal="@dimen/dp20"
         android:layout_height="wrap_content">
 
         <View
@@ -21,6 +20,7 @@
             android:background="@color/gray" />
 
         <RelativeLayout
+            android:paddingHorizontal="@dimen/dp20"
             android:layout_below="@id/separator"
             android:id="@+id/main_layout"
             android:layout_marginTop="@dimen/dp20"
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginStart="@dimen/dp70">
+            android:layout_marginStart="@dimen/dp90">
 
             <TextView
                 android:id="@+id/description"
@@ -85,7 +85,7 @@
             <LinearLayout
                 android:gravity="center_vertical"
                 android:layout_marginTop="@dimen/dp10"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
