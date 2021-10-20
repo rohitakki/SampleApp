@@ -4,15 +4,15 @@
     <data>
         <variable
             name="handler"
-            type="com.movie.app.modules.moviedetails.MovieDetailsActivity" />
+            type="com.trending.app.modules.moviedetails.MovieDetailsActivity" />
 
         <variable
             name="movieItem"
-            type="com.movie.app.model.MovieItem" />
+            type="com.trending.app.model.MovieItem" />
 
         <variable
             name="genreManager"
-            type="com.movie.app.utils.GenreManager" />
+            type="com.trending.app.utils.GenreManager" />
     </data>
 
     <RelativeLayout xmlns:tools="http://schemas.android.com/tools"

@@ -4,15 +4,15 @@
     <data>
         <variable
             name="movieItem"
-            type="com.movie.app.model.MovieItem" />
+            type="com.trending.app.model.MovieItem" />
 
         <variable
             name="activity"
-            type="com.movie.app.modules.main.MainActivity" />
+            type="com.trending.app.modules.main.MainActivity" />
 
         <variable
             name="adapter"
-            type="com.movie.app.modules.main.DiscoverMovieAdapter" />
+            type="com.trending.app.modules.main.DiscoverMovieAdapter" />
 
     </data>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

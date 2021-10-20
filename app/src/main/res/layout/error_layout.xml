@@ -3,7 +3,7 @@
     <data>
         <variable
             name="activity"
-            type="com.movie.app.modules.trending.TrendingActivity" />
+            type="com.trending.app.modules.trending.TrendingActivity" />
     </data>
 
     <RelativeLayout

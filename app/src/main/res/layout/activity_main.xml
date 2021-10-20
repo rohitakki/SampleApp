@@ -5,7 +5,7 @@
     <data>
         <variable
             name="handler"
-            type="com.movie.app.modules.main.MainActivity" />
+            type="com.trending.app.modules.main.MainActivity" />
 
     </data>
 
