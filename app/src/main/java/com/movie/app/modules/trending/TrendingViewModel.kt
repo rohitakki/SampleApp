@@ -22,15 +22,21 @@ class TrendingViewModel @ViewModelInject constructor(
     fun getTrendingRepositories() {
         val job = viewModelScope.launch(Dispatchers.IO) {
             val repositories = repository.getTrendingRepositories()
-            if (!repositories.isNullOrEmpty()) {
-                GlobalScope.launch(Dispatchers.Main) {
+            GlobalScope.launch(Dispatchers.Main) {
+                if (!repositories.isNullOrEmpty()) {
                     trendingRepositoryLiveData.value = repositories
+                } else {
+                    trendingRepositoryLiveData.value = null
                 }
             }
         }
 
         job.invokeOnCompletion {
-
+            if (it != null) {
+                GlobalScope.launch(Dispatchers.Main) {
+                    trendingRepositoryLiveData.value = null
+                }
+            }
         }
     }
 }

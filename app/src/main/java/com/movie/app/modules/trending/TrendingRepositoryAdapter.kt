@@ -8,7 +8,6 @@ import android.widget.LinearLayout
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.movie.app.R
 import com.movie.app.base.viewholder.BaseViewHolder
 import com.movie.app.databinding.ItemRepositoryBinding
 import com.movie.app.model.repositories.Repository
@@ -44,7 +43,6 @@ class TrendingRepositoryAdapter(private val context: Context) : RecyclerView.Ada
         Glide.with(context)
             .load(repository?.builtBy?.get(0)?.avatar)
             .centerCrop()
-            .placeholder(R.drawable.ic_baseline_image_24)
             .into(binding.profileImage)
 
         binding.mainLayout.setOnClickListener {

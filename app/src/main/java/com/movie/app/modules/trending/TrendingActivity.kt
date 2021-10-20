@@ -26,19 +26,42 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel
 
     private fun init() {
         binding = getViewDataBinding()!!
-        binding.shimmerLayout.startShimmerAnimation()
+        binding.errorLayout.activity = this
         setAdapter()
         subscribeToLiveData()
-        trendingViewModel.getTrendingRepositories()
+        getTrendingRepositories()
     }
 
     private fun subscribeToLiveData() {
         trendingViewModel.trendingRepositoryLiveData.observe(this, androidx.lifecycle.Observer {
-            trendingRepositoryAdapter.addRepositories(it)
-            binding.shimmerLayout.stopShimmerAnimation()
-            binding.shimmerLayout.visibility = View.GONE
-            binding.trendingRecyclerView.visibility = View.VISIBLE
+            if (it != null) {
+                trendingRepositoryAdapter.addRepositories(it)
+                showRecyclerView()
+            } else {
+                showError()
+            }
         })
+    }
+
+    private fun showRecyclerView() {
+        binding.shimmerLayout.stopShimmerAnimation()
+        binding.shimmerLayout.visibility = View.GONE
+        binding.trendingRecyclerView.visibility = View.VISIBLE
+        binding.errorLayoutView.visibility = View.GONE
+    }
+
+    private fun showLoading() {
+        binding.shimmerLayout.startShimmerAnimation()
+        binding.shimmerLayout.visibility = View.VISIBLE
+        binding.trendingRecyclerView.visibility = View.GONE
+        binding.errorLayoutView.visibility = View.GONE
+    }
+
+    private fun showError() {
+        binding.shimmerLayout.stopShimmerAnimation()
+        binding.shimmerLayout.visibility = View.GONE
+        binding.trendingRecyclerView.visibility = View.GONE
+        binding.errorLayoutView.visibility = View.VISIBLE
     }
 
     private fun setAdapter() {
@@ -47,6 +70,11 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel
         binding.trendingRecyclerView.layoutManager = layoutManager
         trendingRepositoryAdapter = TrendingRepositoryAdapter(this)
         binding.trendingRecyclerView.adapter = trendingRepositoryAdapter
+    }
+
+    fun getTrendingRepositories() {
+        showLoading()
+        trendingViewModel.getTrendingRepositories()
     }
 
     override fun getBindingVariable(): Int {

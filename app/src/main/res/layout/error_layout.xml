@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="activity"
+            type="com.movie.app.modules.trending.TrendingActivity" />
+    </data>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_portable_wifi_off_24" />
+
+            <TextView
+                android:layout_marginTop="@dimen/dp20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/dp40"
+                android:textSize="@dimen/sp24"
+                android:textColor="@color/black"
+                android:fontFamily="@font/averta_bold"
+                android:text="@string/something_went_wrong" />
+
+            <TextView
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/dp40"
+                android:textSize="@dimen/sp20"
+                android:textColor="@color/gray_dark"
+                android:fontFamily="@font/averta"
+                android:text="@string/an_alien_is_probably_blocking_your_signal" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/retry_button"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/dp20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/green"
+            android:textAlignment="center"
+            android:textSize="@dimen/sp22"
+            android:background="@drawable/green_stroke_round"
+            android:onClick="@{() -> activity.getTrendingRepositories()}"
+            android:text="@string/retry" />
+    </RelativeLayout>
+</layout>

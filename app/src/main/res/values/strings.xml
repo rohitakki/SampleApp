@@ -7,4 +7,7 @@
     <string name="synopsis">Synopsis</string>
     <string name="trending">Trending</string>
     <string name="na">NA</string>
+    <string name="retry">Retry</string>
+    <string name="something_went_wrong">Something went wrong..</string>
+    <string name="an_alien_is_probably_blocking_your_signal">An alien is probably blocking your signal.</string>
 </resources>
