@@ -1,10 +1,5 @@
 <resources>
-    <string name="app_name">Movie App</string>
-    <string name="enter_number">Enter Number</string>
-    <string name="enter_days">Enter Days</string>
-    <string name="submit">Submit</string>
-    <string name="movies">Movies</string>
-    <string name="synopsis">Synopsis</string>
+    <string name="app_name">Trending App</string>
     <string name="trending">Trending</string>
     <string name="na">NA</string>
     <string name="retry">Retry</string>

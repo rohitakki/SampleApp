@@ -54,18 +54,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : AppCompatA
         fragmentTransaction.commitAllowingStateLoss()
     }
 
-    open fun checkPermissions(): Boolean {
-        return if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                this, arrayOf(
-                    Manifest.permission.READ_SMS
-                ), PackageManager.PERMISSION_GRANTED
-            )
-            false
-        } else
-            true
-    }
-
     fun isConnectedToInternet(): Boolean {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
         if (connectivityManager != null) {

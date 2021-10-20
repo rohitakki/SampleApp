@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
 
-
 object Animations {
     fun expand(view: View) {
         val animation: Animation = expandAction(view)

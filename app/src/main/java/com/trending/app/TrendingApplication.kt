@@ -5,8 +5,8 @@ import com.trending.app.preferences.AppPreferences
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MovieApplication : Application() {
-    private var mInstance: MovieApplication? = null
+class TrendingApplication : Application() {
+    private var mInstance: TrendingApplication? = null
 
     override fun onCreate() {
         super.onCreate()

@@ -10,11 +10,10 @@
         android:smallScreens="true" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.trending.app.MovieApplication"
+        android:name="com.trending.app.TrendingApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -28,8 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.trending.app.modules.moviedetails.MovieDetailsActivity" />
-        <activity android:name="com.trending.app.modules.main.MainActivity"/>
     </application>
 
 </manifest>
