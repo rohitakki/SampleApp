@@ -38,5 +38,7 @@ data class Repository(
 	val username: String? = null,
 
 	@field:SerializedName("since")
-	val since: String? = null
+	val since: String? = null,
+
+	var isExpanded: Boolean = false
 )

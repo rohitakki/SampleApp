@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import android.widget.LinearLayout
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -12,6 +12,7 @@ import com.movie.app.R
 import com.movie.app.base.viewholder.BaseViewHolder
 import com.movie.app.databinding.ItemRepositoryBinding
 import com.movie.app.model.repositories.Repository
+import com.movie.app.utils.Animations
 
 class TrendingRepositoryAdapter(private val context: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
@@ -46,10 +47,23 @@ class TrendingRepositoryAdapter(private val context: Context) : RecyclerView.Ada
             .placeholder(R.drawable.ic_baseline_image_24)
             .into(binding.profileImage)
 
+        binding.mainLayout.setOnClickListener {
+            val expanded = toggleLayout(!repository?.isExpanded!!, binding.secondaryLayout)
+            repository.isExpanded = expanded
+        }
     }
 
     override fun getItemCount(): Int {
         return repositoryList?.size!!
+    }
+
+    private fun toggleLayout(isExpanded: Boolean, layoutExpand: LinearLayout): Boolean {
+        if (isExpanded) {
+            Animations.expand(layoutExpand)
+        } else {
+            Animations.collapse(layoutExpand)
+        }
+        return isExpanded
     }
 
     class TrendingRepositoryViewHolder(val itemRepositoryBinding: ItemRepositoryBinding) : BaseViewHolder(itemRepositoryBinding.root)

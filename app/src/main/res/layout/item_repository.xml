@@ -64,6 +64,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/secondary_layout"
             android:layout_marginTop="@dimen/dp10"
             android:layout_below="@id/main_layout"

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.movie.app.R
 import com.movie.app.base.activity.BaseActivity
 import com.movie.app.databinding.ActivityTrendingBinding
@@ -37,6 +38,7 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel
 
     private fun setAdapter() {
         val layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        (binding.trendingRecyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         binding.trendingRecyclerView.layoutManager = layoutManager
         trendingRepositoryAdapter = TrendingRepositoryAdapter(this)
         binding.trendingRecyclerView.adapter = trendingRepositoryAdapter
