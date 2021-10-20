@@ -73,8 +73,12 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel
     }
 
     fun getTrendingRepositories() {
-        showLoading()
-        trendingViewModel.getTrendingRepositories()
+        if (isConnectedToInternet()) {
+            showLoading()
+            trendingViewModel.getTrendingRepositories()
+        } else {
+            showError()
+        }
     }
 
     override fun getBindingVariable(): Int {

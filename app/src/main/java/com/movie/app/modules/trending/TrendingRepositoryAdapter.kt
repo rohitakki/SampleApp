@@ -3,6 +3,7 @@ package com.movie.app.modules.trending
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.graphics.toColorInt
@@ -45,8 +46,13 @@ class TrendingRepositoryAdapter(private val context: Context) : RecyclerView.Ada
             .centerCrop()
             .into(binding.profileImage)
 
+        if (repository?.isExpanded!!) {
+            binding.secondaryLayout.visibility = View.VISIBLE
+        } else {
+            binding.secondaryLayout.visibility = View.GONE
+        }
         binding.mainLayout.setOnClickListener {
-            val expanded = toggleLayout(!repository?.isExpanded!!, binding.secondaryLayout)
+            val expanded = toggleLayout(!repository.isExpanded, binding.secondaryLayout)
             repository.isExpanded = expanded
         }
     }
