@@ -1,5 +1,7 @@
 package com.trending.app.di
 
+import com.kwabenaberko.newsapilib.NewsApiClient
+import com.trending.app.BuildConfig
 import com.trending.app.network.ApiInterface
 import dagger.Module
 import dagger.Provides
@@ -16,5 +18,11 @@ object ServiceModule {
     @Singleton
     fun provideUserService(@ApiModule retrofit: Retrofit): ApiInterface {
         return retrofit.create(ApiInterface::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsApiClient(): NewsApiClient {
+        return NewsApiClient(BuildConfig.API_KEY)
     }
 }

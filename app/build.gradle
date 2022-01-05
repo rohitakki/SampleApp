@@ -17,6 +17,9 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BASE_URL", "\"https://newsapi.org/v2/\"")
+        buildConfigField("String", "API_KEY", "\"4151e6860aa94e128cbff6c3c93ca959\"")
     }
 
     buildTypes {
@@ -95,12 +98,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
-    //circular image
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
-
-    //shimmer layout
-    implementation 'io.supercharge:shimmerlayout:2.1.0'
-
     //swipe refresh layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    //NewsApi Sdk
+    implementation 'com.github.KwabenBerko:News-API-Java:1.0.0'
 }

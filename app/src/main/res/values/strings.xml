@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">Trending App</string>
+    <string name="app_name">News App</string>
     <string name="trending">Trending</string>
     <string name="na">NA</string>
     <string name="retry">Retry</string>
     <string name="something_went_wrong">Something went wrong..</string>
     <string name="an_alien_is_probably_blocking_your_signal">An alien is probably blocking your signal.</string>
+    <string name="article_image">Article image</string>
+    <string name="search_in_feed">Search in feed</string>
 </resources>

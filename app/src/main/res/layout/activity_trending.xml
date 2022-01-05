@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@color/background_light_white"
         tools:context=".modules.trending.TrendingActivity">
 
         <androidx.appcompat.widget.Toolbar
@@ -15,55 +14,41 @@
             android:layout_height="wrap_content"
             android:minHeight="?android:attr/actionBarSize">
 
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/search_field"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/trending"
-                android:fontFamily="@font/averta_bold"
-                android:textSize="@dimen/sp30"
-                android:textColor="@color/black" />
+                android:textSize="@dimen/sp24"
+                android:textColor="@color/blue"
+                android:hint="@string/search_in_feed"
+                android:textColorHint="@color/blue"
+                android:drawablePadding="@dimen/dp20"
+                android:background="@color/white"
+                android:layout_marginEnd="@dimen/dp28"
+                android:drawableStart="@drawable/ic_round_search_24"
+                android:inputType="text" />
         </androidx.appcompat.widget.Toolbar>
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        <ProgressBar
             android:visibility="gone"
+            android:layout_marginVertical="@dimen/dp10"
+            android:layout_gravity="center"
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/pull_to_refresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
+                tools:listitem="@layout/item_news_heading"
                 android:layout_height="match_parent"
                 android:id="@+id/trending_recycler_view" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-        <io.supercharge.shimmerlayout.ShimmerLayout
-            android:id="@+id/shimmer_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:shimmer_animation_duration="1200">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <include layout="@layout/item_shimmer" />
-                <include layout="@layout/item_shimmer" />
-                <include layout="@layout/item_shimmer" />
-                <include layout="@layout/item_shimmer" />
-                <include layout="@layout/item_shimmer" />
-                <include layout="@layout/item_shimmer" />
-                <include layout="@layout/item_shimmer" />
-                <include layout="@layout/item_shimmer" />
-                <include layout="@layout/item_shimmer" />
-                <include layout="@layout/item_shimmer" />
-
-            </LinearLayout>
-
-        </io.supercharge.shimmerlayout.ShimmerLayout>
 
         <RelativeLayout
             android:visibility="gone"

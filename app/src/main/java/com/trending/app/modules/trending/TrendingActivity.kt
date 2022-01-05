@@ -1,6 +1,8 @@
 package com.trending.app.modules.trending
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,13 +12,44 @@ import com.trending.app.R
 import com.trending.app.base.activity.BaseActivity
 import com.trending.app.databinding.ActivityTrendingBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 @AndroidEntryPoint
-class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel>() {
+class TrendingActivity(override val coroutineContext: CoroutineContext = Dispatchers.Main) : BaseActivity<ActivityTrendingBinding, TrendingViewModel>(), CoroutineScope {
 
     private val trendingViewModel: TrendingViewModel by viewModels()
     private lateinit var binding: ActivityTrendingBinding
-    private lateinit var trendingRepositoryAdapter: TrendingRepositoryAdapter
+    private lateinit var articleAdapter: ArticleAdapter
+
+    //Debounce on Search field
+    private val watcher = object : TextWatcher {
+        private var searchFor = ""
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            val searchText = s.toString().trim()
+            if (searchText == searchFor) {
+                return
+            }
+            searchFor = searchText
+
+            launch {
+                delay(500)
+                if (searchText != searchFor)
+                    return@launch
+                if (searchText.length >= 3) {
+                    binding.errorLayout.searchField = searchText
+                    getNewsArticles(searchText)
+                }
+            }
+        }
+
+        override fun afterTextChanged(s: Editable?) = Unit
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,18 +62,22 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel
         binding.errorLayout.activity = this
         setAdapter()
         subscribeToLiveData()
-        getTrendingRepositories()
-
         binding.pullToRefresh.setOnRefreshListener {
             refreshData()
         }
+        binding.searchField.addTextChangedListener(watcher)
+
+        getNewsArticles("")
     }
 
+    /**
+     * Observe changes in news articles list
+     */
     private fun subscribeToLiveData() {
-        trendingViewModel.trendingRepositoryLiveData.observe(this, androidx.lifecycle.Observer {
-            if (it != null) {
-                trendingRepositoryAdapter.addRepositories(it)
-                showRecyclerView()
+        trendingViewModel.newsArticlesLiveData.observe(this, androidx.lifecycle.Observer {
+            if (!it.isNullOrEmpty()) {
+                articleAdapter.submitList(it)
+                hideLoading()
                 binding.pullToRefresh.isRefreshing = false
             } else {
                 showError()
@@ -49,23 +86,17 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel
         })
     }
 
-    private fun showRecyclerView() {
-        binding.shimmerLayout.stopShimmerAnimation()
-        binding.shimmerLayout.visibility = View.GONE
-        binding.pullToRefresh.visibility = View.VISIBLE
+    private fun showLoading() {
+        binding.progressBar.visibility = View.VISIBLE
         binding.errorLayoutView.visibility = View.GONE
     }
 
-    private fun showLoading() {
-        binding.shimmerLayout.startShimmerAnimation()
-        binding.shimmerLayout.visibility = View.VISIBLE
-        binding.pullToRefresh.visibility = View.GONE
-        binding.errorLayoutView.visibility = View.GONE
+    private fun hideLoading() {
+        binding.progressBar.visibility = View.GONE
     }
 
     private fun showError() {
-        binding.shimmerLayout.stopShimmerAnimation()
-        binding.shimmerLayout.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
         binding.pullToRefresh.visibility = View.GONE
         binding.errorLayoutView.visibility = View.VISIBLE
     }
@@ -74,27 +105,35 @@ class TrendingActivity : BaseActivity<ActivityTrendingBinding, TrendingViewModel
         val layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         (binding.trendingRecyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         binding.trendingRecyclerView.layoutManager = layoutManager
-        trendingRepositoryAdapter = TrendingRepositoryAdapter(this)
-        binding.trendingRecyclerView.adapter = trendingRepositoryAdapter
+        articleAdapter = ArticleAdapter(this)
+        binding.trendingRecyclerView.adapter = articleAdapter
     }
 
-    fun getTrendingRepositories() {
+    /**
+     * get top headlines or get news articles based on search
+     */
+    fun getNewsArticles(searchString: String) {
+        showLoading()
         if (isConnectedToInternet()) {
-            showLoading()
-            trendingViewModel.getTrendingReposFromLocal()
+            if (searchString.isEmpty()) {
+                trendingViewModel.getTopHeadlines()
+            } else {
+                trendingViewModel.searchNews(searchString)
+            }
         } else {
+            binding.errorLayout.searchField = searchString
             showError()
             binding.pullToRefresh.isRefreshing = false
         }
     }
 
+    /**
+     * On pull to refresh, retrieve top headlines
+     */
     private fun refreshData() {
-        if (isConnectedToInternet()) {
-            trendingViewModel.getTrendingRepositories()
-        } else {
-            showError()
-            binding.pullToRefresh.isRefreshing = false
-        }
+        binding.searchField.setText("")
+        binding.errorLayout.searchField = ""
+        trendingViewModel.getTopHeadlines()
     }
 
     override fun getBindingVariable(): Int {

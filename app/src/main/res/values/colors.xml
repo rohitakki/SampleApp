@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorPrimaryDark">#06091C</color>
-    <color name="colorAccent">#06091C</color>
+    <color name="colorPrimaryDark">#0A4573</color>
+    <color name="colorAccent">#0E5B98</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
@@ -13,4 +13,6 @@
 
     <color name="star_yellow">#FFC107</color>
     <color name="green">#4CAF50</color>
+
+    <color name="blue">#0E5B98</color>
 </resources>

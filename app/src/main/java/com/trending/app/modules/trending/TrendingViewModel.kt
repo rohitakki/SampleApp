@@ -1,79 +1,111 @@
 package com.trending.app.modules.trending
 
 import android.app.Application
+import android.util.Log
 import androidx.annotation.NonNull
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.kwabenaberko.newsapilib.NewsApiClient
+import com.kwabenaberko.newsapilib.NewsApiClient.ArticlesResponseCallback
+import com.kwabenaberko.newsapilib.models.Article
+import com.kwabenaberko.newsapilib.models.request.EverythingRequest
+import com.kwabenaberko.newsapilib.models.request.TopHeadlinesRequest
 import com.trending.app.base.viewmodel.BaseViewModel
-import com.trending.app.model.repositories.Repository
-import com.trending.app.preferences.AppPreferences
 import com.trending.app.repository.DataRepository
+import com.kwabenaberko.newsapilib.models.response.ArticleResponse
+import com.trending.app.`interface`.Constants
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class TrendingViewModel @ViewModelInject constructor(
     @NonNull application: Application,
-    private val repository: DataRepository
+    private val repository: DataRepository,
+    private val newsApiClient: NewsApiClient
 ) : BaseViewModel(application) {
 
-    val trendingRepositoryLiveData = MutableLiveData<List<Repository?>?>()
+    val newsArticlesLiveData = MutableLiveData<List<Article>?>()
 
     /**
-     * Get trending repositories from API
+     * get all the top headlines in India
      */
-    fun getTrendingRepositories() {
+    fun getTopHeadlines() {
         val job = viewModelScope.launch(Dispatchers.IO) {
-            val repositories = repository.getTrendingRepositories()
-            viewModelScope.launch(Dispatchers.Main) {
-                if (!repositories.isNullOrEmpty()) {
-                    trendingRepositoryLiveData.value = repositories
-                    saveToLocal(repositories)
-                } else {
-                    trendingRepositoryLiveData.value = null
+            newsApiClient.getTopHeadlines(
+                TopHeadlinesRequest.Builder()
+                    .language("en")
+                    .country("in")
+                    .pageSize(100)
+                    .build(),
+                object : ArticlesResponseCallback {
+                    override fun onSuccess(response: ArticleResponse) {
+                        viewModelScope.launch(Dispatchers.Main) {
+                            if (response.status == Constants.HTTP_OK) {
+                                if (!response.articles.isNullOrEmpty()) {
+                                    newsArticlesLiveData.value = response.articles
+                                } else {
+                                    newsArticlesLiveData.value = listOf()
+                                }
+                            }
+                        }
+                    }
+
+                    override fun onFailure(throwable: Throwable) {
+                        Log.e(TrendingViewModel::class.java.simpleName, throwable.message.toString())
+                        viewModelScope.launch(Dispatchers.Main) {
+                            newsArticlesLiveData.value = null
+                        }
+                    }
                 }
-            }
+            )
         }
 
         job.invokeOnCompletion {
             if (it != null) {
-                viewModelScope.launch(Dispatchers.Main) {
-                    trendingRepositoryLiveData.value = null
-                }
+                Log.e(TrendingViewModel::class.java.simpleName, it.message.toString())
             }
         }
     }
 
     /**
-     * Save trending repositories to shared preferences
+     * Search news articles as per search text entered by user
+     * @param searchString entered search text in search fields
      */
-    private fun saveToLocal(repositories: List<Repository?>) {
-        GlobalScope.launch(Dispatchers.IO) {
-            AppPreferences.setTrendingRepos(repositories)
-        }
-    }
+    fun searchNews(searchString: String) {
+        val job = viewModelScope.launch(Dispatchers.Main) {
+            newsApiClient.getEverything(
+                EverythingRequest.Builder()
+                    .q(searchString)
+                    .pageSize(100)
+                    .language("en")
+                    .sortBy("publishedAt")
+                    .build(),
+                object : ArticlesResponseCallback {
+                    override fun onSuccess(response: ArticleResponse) {
+                        viewModelScope.launch(Dispatchers.Main) {
+                            if (response.status == Constants.HTTP_OK) {
+                                if (!response.articles.isNullOrEmpty()) {
+                                    newsArticlesLiveData.value = response.articles
+                                } else {
+                                    newsArticlesLiveData.value = listOf()
+                                }
+                            }
+                        }
+                    }
 
-    /**
-     * Read trending repositories from shared preferences
-     */
-    fun getTrendingReposFromLocal() {
-        val job = viewModelScope.launch(Dispatchers.IO) {
-            val repositories = AppPreferences.getTrendingRepos()
-            viewModelScope.launch(Dispatchers.Main) {
-                if (!repositories.isNullOrEmpty()) {
-                    trendingRepositoryLiveData.value = repositories
-                } else {
-                    getTrendingRepositories()
+                    override fun onFailure(throwable: Throwable) {
+                        Log.e(TrendingViewModel::class.java.simpleName, throwable.message.toString())
+                        viewModelScope.launch(Dispatchers.Main) {
+                            newsArticlesLiveData.value = null
+                        }
+                    }
                 }
-            }
+            )
         }
 
         job.invokeOnCompletion {
             if (it != null) {
-                viewModelScope.launch(Dispatchers.Main) {
-                    getTrendingRepositories()
-                }
+                Log.e(TrendingViewModel::class.java.simpleName, it.message.toString())
             }
         }
     }

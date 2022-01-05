@@ -4,6 +4,9 @@
         <variable
             name="activity"
             type="com.trending.app.modules.trending.TrendingActivity" />
+        <variable
+            name="searchField"
+            type="String" />
     </data>
 
     <RelativeLayout
@@ -54,7 +57,7 @@
             android:textAlignment="center"
             android:textSize="@dimen/sp22"
             android:background="@drawable/green_stroke_round"
-            android:onClick="@{() -> activity.getTrendingRepositories()}"
+            android:onClick="@{() -> activity.getNewsArticles(searchField)}"
             android:text="@string/retry" />
     </RelativeLayout>
 </layout>

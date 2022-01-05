@@ -1,6 +1,6 @@
 package com.trending.app.di
 
-import com.trending.app.`interface`.Constants
+import com.trending.app.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +19,7 @@ object HttpModule {
     @Singleton
     @Provides
     fun providesBaseUrl(): String {
-        return Constants.baseUrl
+        return BuildConfig.BASE_URL
     }
 
     @ApiModule
