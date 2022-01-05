@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.annotation.NonNull
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.kwabenaberko.newsapilib.NewsApiClient
 import com.kwabenaberko.newsapilib.NewsApiClient.ArticlesResponseCallback
@@ -25,6 +26,7 @@ class TrendingViewModel @ViewModelInject constructor(
 ) : BaseViewModel(application) {
 
     val newsArticlesLiveData = MutableLiveData<List<Article>?>()
+    var totalResults = MutableLiveData<Int>()
 
     /**
      * get all the top headlines in India
@@ -42,8 +44,10 @@ class TrendingViewModel @ViewModelInject constructor(
                         viewModelScope.launch(Dispatchers.Main) {
                             if (response.status == Constants.HTTP_OK) {
                                 if (!response.articles.isNullOrEmpty()) {
+                                    totalResults.value = response.totalResults
                                     newsArticlesLiveData.value = response.articles
                                 } else {
+                                    totalResults.value = 0
                                     newsArticlesLiveData.value = listOf()
                                 }
                             }
@@ -53,6 +57,7 @@ class TrendingViewModel @ViewModelInject constructor(
                     override fun onFailure(throwable: Throwable) {
                         Log.e(TrendingViewModel::class.java.simpleName, throwable.message.toString())
                         viewModelScope.launch(Dispatchers.Main) {
+                            totalResults.value = 0
                             newsArticlesLiveData.value = null
                         }
                     }
@@ -85,8 +90,10 @@ class TrendingViewModel @ViewModelInject constructor(
                         viewModelScope.launch(Dispatchers.Main) {
                             if (response.status == Constants.HTTP_OK) {
                                 if (!response.articles.isNullOrEmpty()) {
+                                    totalResults.value = response.totalResults
                                     newsArticlesLiveData.value = response.articles
                                 } else {
+                                    totalResults.value = 0
                                     newsArticlesLiveData.value = listOf()
                                 }
                             }
@@ -96,6 +103,7 @@ class TrendingViewModel @ViewModelInject constructor(
                     override fun onFailure(throwable: Throwable) {
                         Log.e(TrendingViewModel::class.java.simpleName, throwable.message.toString())
                         viewModelScope.launch(Dispatchers.Main) {
+                            totalResults.value = 0
                             newsArticlesLiveData.value = null
                         }
                     }

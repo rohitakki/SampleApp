@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="totalResults"
+            type="Integer" />
+    </data>
+
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,11 +49,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.recyclerview.widget.RecyclerView
+            <LinearLayout
                 android:layout_width="match_parent"
-                tools:listitem="@layout/item_news_heading"
-                android:layout_height="match_parent"
-                android:id="@+id/trending_recycler_view" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginEnd="@dimen/dp20"
+                    android:layout_gravity="end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/sp18"
+                    android:visibility="@{totalResults > 0 ? View.VISIBLE : View.GONE}"
+                    android:text="@{`Total results: ` + totalResults}" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    tools:listitem="@layout/item_news_heading"
+                    android:layout_height="match_parent"
+                    android:id="@+id/trending_recycler_view" />
+
+            </LinearLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

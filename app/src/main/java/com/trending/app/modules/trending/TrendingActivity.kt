@@ -5,9 +5,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.google.android.material.snackbar.Snackbar
 import com.trending.app.R
 import com.trending.app.base.activity.BaseActivity
 import com.trending.app.databinding.ActivityTrendingBinding
@@ -66,7 +68,6 @@ class TrendingActivity(override val coroutineContext: CoroutineContext = Dispatc
             refreshData()
         }
         binding.searchField.addTextChangedListener(watcher)
-
         getNewsArticles("")
     }
 
@@ -79,10 +80,17 @@ class TrendingActivity(override val coroutineContext: CoroutineContext = Dispatc
                 articleAdapter.submitList(it)
                 hideLoading()
                 binding.pullToRefresh.isRefreshing = false
-            } else {
+            } else if (it == null) {
                 showError()
                 binding.pullToRefresh.isRefreshing = false
+            } else if (it.isEmpty()) {
+                hideLoading()
+                showToastMessage("No results found for '${binding.searchField.text}'")
             }
+        })
+
+        trendingViewModel.totalResults.observe(this, Observer {
+            binding.totalResults = it
         })
     }
 
